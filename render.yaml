@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: investor-website
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://investor-website.onrender.com
+    healthCheckPath: /de
+    autoDeploy: true
+    # Build-Umgebung für Next.js
+    build:
+      environment:
+        - NEXT_TELEMETRY_DISABLED=1

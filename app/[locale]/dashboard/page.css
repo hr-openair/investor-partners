@@ -1,0 +1,73 @@
+/* ========================================
+   DASHBOARD
+   ======================================== */
+
+.dashboard-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 2rem;
+}
+
+/* --- Welcome --- */
+.dashboard-welcome {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 2rem;
+}
+
+.dashboard-greeting {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0 0 0.25rem 0;
+}
+
+.dashboard-lastlogin {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* --- Grid --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+}
+
+.dashboard-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #0f172a;
+}
+
+.dashboard-card p {
+  color: #64748b;
+  margin: 0;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 1.75rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
