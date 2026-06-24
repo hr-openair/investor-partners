@@ -1,0 +1,36 @@
+/* Filter */
+.admin-filter-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.admin-filter-btn {
+  padding: 0.4rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.admin-filter-btn:hover {
+  background: #f1f5f9;
+}
+
+.admin-filter-btn.active {
+  background: #0f172a;
+  color: white;
+  border-color: #0f172a;
+}
+
+.admin-positive {
+  color: #059669;
+  font-weight: 600;
+}
+
+.admin-negative {
+  color: #dc2626;
+  font-weight: 600;
+}

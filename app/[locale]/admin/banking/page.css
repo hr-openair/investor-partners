@@ -1,0 +1,13 @@
+.admin-btn-approve {
+  background: #d1fae5;
+  color: #059669;
+  padding: 0.2rem 0.6rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.admin-btn-approve:hover {
+  background: #a7f3d0;
+}

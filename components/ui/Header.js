@@ -19,6 +19,8 @@ export default function Header() {
     { href: `/${locale}/partners`, label: t.nav.partners },
     { href: `/${locale}/contact`, label: t.nav.contact },
     { href: `/${locale}/login`, label: t.nav.login },
+    // ✅ NEU: Admin-Link (nur für Admins sichtbar – hier immer sichtbar)
+    { href: `/${locale}/admin`, label: '🛡️ Admin' },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
