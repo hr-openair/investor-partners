@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
 
+// Wichtig: In Next.js App Router muss die Route eine GET-Funktion exportieren
 export async function GET() {
   try {
-    const result = await sql`SELECT NOW() as current_time, version() as pg_version`;
+    // Einfacher Test ohne Datenbank (zuerst)
     return NextResponse.json({
       success: true,
-      message: 'Datenbankverbindung erfolgreich!',
-      data: result.rows[0]
+      message: 'API funktioniert!',
+      timestamp: new Date().toISOString(),
+      env: {
+        hasDbUrl: !!process.env.DATABASE_URL,
+        nodeEnv: process.env.NODE_ENV,
+      }
     });
   } catch (error) {
-    console.error('DB Connection Error:', error);
     return NextResponse.json(
       { success: false, error: error.message },
       { status: 500 }
