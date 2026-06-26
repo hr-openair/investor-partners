@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { useTranslations } from '../../../translations';
+import { useTranslations } from '../../../../translations';
 import './page.css';
 
 export default function AdminStaffPage({ params }) {
