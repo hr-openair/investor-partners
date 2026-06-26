@@ -116,6 +116,46 @@ export default function AdminStaffPage({ params }) {
           </table>
         </div>
       </div>
+
+      {/* Modal: Neuer Mitarbeiter */}
+      {showAddModal && (
+        <div className="admin-modal">
+          <div className="admin-modal-content">
+            <h2>Mitarbeiter hinzufügen</h2>
+            <form onSubmit={handleAddStaff}>
+              <div className="admin-form-group">
+                <label>Benutzer-ID</label>
+                <input
+                  type="number"
+                  value={newStaff.user_id}
+                  onChange={(e) => setNewStaff({...newStaff, user_id: e.target.value})}
+                  placeholder="z.B. 1"
+                  required
+                />
+              </div>
+              <div className="admin-form-group">
+                <label>Rolle</label>
+                <select
+                  value={newStaff.role}
+                  onChange={(e) => setNewStaff({...newStaff, role: e.target.value})}
+                >
+                  <option value="admin">Admin</option>
+                  <option value="support">Support</option>
+                  <option value="manager">Manager</option>
+                </select>
+              </div>
+              <div className="admin-modal-actions">
+                <button type="button" className="admin-btn admin-btn-secondary" onClick={() => setShowAddModal(false)}>
+                  Abbrechen
+                </button>
+                <button type="submit" className="admin-btn admin-btn-primary">
+                  Mitarbeiter hinzufügen
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useTranslations } from '../../../../translations';
+import { useTranslations } from '../../../translations';
 import './page.css';
 
 export default function AdminDashboardPage({ params }) {
