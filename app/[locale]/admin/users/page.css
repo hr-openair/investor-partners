@@ -72,6 +72,112 @@
   color: #94a3b8;
 }
 
+/* Admin Actions */
+.admin-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.admin-btn-secondary {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.admin-btn-secondary:hover {
+  background: #cbd5e1;
+}
+
+/* Roles */
+.admin-role {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.admin-role-user { background: #dbeafe; color: #1d4ed8; }
+.admin-role-admin { background: #d1fae5; color: #059669; }
+.admin-role-support { background: #fef3c7; color: #d97706; }
+.admin-role-manager { background: #e0e7ff; color: #4f46e5; }
+
+/* Permissions */
+.admin-permissions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.admin-permission-badge {
+  background: #f1f5f9;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.65rem;
+  color: #475569;
+}
+
+/* Modal */
+.admin-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.admin-modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.admin-form-group {
+  margin-bottom: 1rem;
+}
+
+.admin-form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: #0f172a;
+}
+
+.admin-form-group input,
+.admin-form-group select {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.admin-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .admin-actions {
+    flex-direction: column;
+  }
+  .admin-modal-content {
+    padding: 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .admin-toolbar {
     flex-direction: column;

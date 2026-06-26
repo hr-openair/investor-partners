@@ -14,10 +14,24 @@ export function proxy(request) {
   const locales = ['de', 'en'];
   const hasLocale = locales.includes(firstSegment);
 
-  // 3. Keine Sprache in der URL → auf /de umleiten
+  // 3. Keine Sprache in der URL → auf /de umleiten (außer bei statischen Assets)
   if (!hasLocale && pathname !== '/') {
-    return NextResponse.redirect(new URL(`/de${pathname}`, request.url));
+    // Prüfen, ob es sich um eine API-Route oder statische Datei handelt
+    const isApi = pathname.startsWith('/api');
+    const isStatic = pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|webp|ico)$/);
+    const isNextStatic = pathname.startsWith('/_next');
+
+    // API und statische Dateien nicht umleiten
+    if (!isApi && !isStatic && !isNextStatic) {
+      return NextResponse.redirect(new URL(`/de${pathname}`, request.url));
+    }
   }
+
+  // 4. Admin-Bereich: Prüfen, ob Benutzer authentifiziert ist (optional)
+  // Hier könnte eine Session-Prüfung für /admin/* eingebaut werden
+  // if (pathname.includes('/admin') && !request.cookies.get('token')) {
+  //   return NextResponse.redirect(new URL(`/${firstSegment || 'de'}/login`, request.url));
+  // }
 
   return NextResponse.next();
 }
