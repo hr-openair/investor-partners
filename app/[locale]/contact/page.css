@@ -1,5 +1,5 @@
 /* ========================================
-   KONTAKT
+   KONTAKT - Dark/Light kompatibel
    ======================================== */
 
 .contact-container {
@@ -11,23 +11,25 @@
 }
 
 .contact-card {
-  background: #ffffff;
+  background: var(--bg-card);
   padding: 2.5rem 2rem;
   border-radius: 1rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   max-width: 600px;
   width: 100%;
+  transition: background var(--transition-speed) ease,
+              border-color var(--transition-speed) ease;
 }
 
 .contact-title {
   font-size: 1.75rem;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
 
 .contact-subtitle {
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 2rem;
 }
 
@@ -47,23 +49,26 @@
 .contact-form-group label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #334155;
+  color: var(--text-secondary);
 }
 
 .contact-input,
 .contact-textarea {
   padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   font-size: 1rem;
   font-family: inherit;
-  transition: border-color 0.2s ease;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: border-color var(--transition-speed) ease,
+              background var(--transition-speed) ease;
 }
 
 .contact-input:focus,
 .contact-textarea:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: var(--accent-blue);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
@@ -72,21 +77,21 @@
 }
 
 .contact-success {
-  color: #16a34a;
-  background: #f0fdf4;
+  color: var(--accent-green);
+  background: rgba(5, 150, 105, 0.1);
   padding: 0.75rem;
   border-radius: 0.375rem;
 }
 
 .contact-error {
-  color: #dc2626;
-  background: #fef2f2;
+  color: var(--accent-red);
+  background: rgba(220, 38, 38, 0.1);
   padding: 0.75rem;
   border-radius: 0.375rem;
 }
 
 .contact-button {
-  background: #0f172a;
+  background: var(--accent-blue);
   color: #ffffff;
   padding: 0.75rem;
   border-radius: 0.5rem;
@@ -94,11 +99,12 @@
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background var(--transition-speed) ease,
+              opacity var(--transition-speed) ease;
 }
 
 .contact-button:hover {
-  background: #1e293b;
+  opacity: 0.9;
 }
 
 .contact-button:disabled {

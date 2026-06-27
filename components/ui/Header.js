@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from '../../translations';
+import ThemeToggle from './ThemeToggle';
 import './Header.css';
 
 export default function Header() {
@@ -19,7 +20,6 @@ export default function Header() {
     { href: `/${locale}/partners`, label: t.nav.partners },
     { href: `/${locale}/contact`, label: t.nav.contact },
     { href: `/${locale}/login`, label: t.nav.login },
-    // ✅ NEU: Admin-Link (nur für Admins sichtbar – hier immer sichtbar)
     { href: `/${locale}/admin`, label: '🛡️ Admin' },
   ];
 
@@ -34,15 +34,19 @@ export default function Header() {
           <span className="logo-accent">Partners</span>
         </Link>
 
-        <button
-          className={`hamburger ${isMenuOpen ? 'active' : ''}`}
-          onClick={toggleMenu}
-          aria-label="Menü öffnen/schließen"
-        >
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-        </button>
+        <div className="header-right">
+          <ThemeToggle />
+
+          <button
+            className={`hamburger ${isMenuOpen ? 'active' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Menü öffnen/schließen"
+          >
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+            <span className="hamburger-line"></span>
+          </button>
+        </div>
 
         <nav className={`nav ${isMenuOpen ? 'open' : ''}`}>
           {navLinks.map((link) => (

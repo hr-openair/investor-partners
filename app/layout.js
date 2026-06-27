@@ -1,6 +1,7 @@
 import './globals.css';
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
+import { ThemeProvider } from '../components/ThemeProvider';
 
 export const metadata = {
   title: 'Investor Partners',
@@ -11,11 +12,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="de">
       <body>
+       <ThemeProvider>
         <Header />
         <main className="container" style={{ flex: 1, paddingTop: '2rem', paddingBottom: '2rem' }}>
           {children}
         </main>
         <Footer />
+       </ThemeProvider>
       </body>
     </html>
   );

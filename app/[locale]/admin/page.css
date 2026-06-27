@@ -1,3 +1,7 @@
+/* ========================================
+   ADMIN DASHBOARD - Dark/Light kompatibel
+   ======================================== */
+
 .admin-container {
   max-width: 1400px;
   margin: 0 auto;
@@ -11,12 +15,12 @@
 .admin-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
 
 .admin-subtitle {
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 1.1rem;
 }
 
@@ -29,23 +33,23 @@
 }
 
 .admin-stat-card {
-  background: #ffffff;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 1rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all var(--transition-speed) ease;
 }
 
 .admin-stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
-  border-color: #2563eb;
+  box-shadow: 0 8px 16px var(--shadow-color);
+  border-color: var(--accent-blue);
 }
 
 .admin-stat-label {
   font-size: 0.875rem;
-  color: #64748b;
+  color: var(--text-muted);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -54,23 +58,25 @@
 .admin-stat-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-primary);
   margin-top: 0.25rem;
 }
 
 /* Section */
 .admin-section {
-  background: #ffffff;
+  background: var(--bg-card);
   border-radius: 1rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   padding: 1.5rem;
   margin-bottom: 2rem;
+  transition: background var(--transition-speed) ease,
+              border-color var(--transition-speed) ease;
 }
 
 .admin-section-title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
@@ -88,25 +94,26 @@
 .admin-table th {
   text-align: left;
   padding: 0.75rem 1rem;
-  background: #f8fafc;
+  background: var(--bg-secondary);
   font-weight: 600;
-  color: #475569;
-  border-bottom: 2px solid #e2e8f0;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .admin-table td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .admin-table tr:hover td {
-  background: #f8fafc;
+  background: var(--bg-secondary);
 }
 
 .admin-empty {
   text-align: center;
   padding: 2rem !important;
-  color: #94a3b8;
+  color: var(--text-muted);
 }
 
 /* Badges & Status */
@@ -118,10 +125,10 @@
   font-weight: 600;
 }
 
-.admin-badge-buy { background: #dbeafe; color: #1d4ed8; }
-.admin-badge-sell { background: #fee2e2; color: #dc2626; }
-.admin-badge-deposit { background: #d1fae5; color: #059669; }
-.admin-badge-withdraw { background: #fef3c7; color: #d97706; }
+.admin-badge-buy { background: rgba(37, 99, 235, 0.2); color: var(--accent-blue); }
+.admin-badge-sell { background: rgba(220, 38, 38, 0.2); color: var(--accent-red); }
+.admin-badge-deposit { background: rgba(5, 150, 105, 0.2); color: var(--accent-green); }
+.admin-badge-withdraw { background: rgba(217, 119, 6, 0.2); color: var(--accent-yellow); }
 
 .admin-status {
   display: inline-block;
@@ -132,9 +139,9 @@
   text-transform: capitalize;
 }
 
-.admin-status-pending { background: #fef3c7; color: #d97706; }
-.admin-status-completed { background: #d1fae5; color: #059669; }
-.admin-status-failed { background: #fee2e2; color: #dc2626; }
+.admin-status-pending { background: rgba(217, 119, 6, 0.2); color: var(--accent-yellow); }
+.admin-status-completed { background: rgba(5, 150, 105, 0.2); color: var(--accent-green); }
+.admin-status-failed { background: rgba(220, 38, 38, 0.2); color: var(--accent-red); }
 
 /* Navigation Cards */
 .admin-nav-grid {
@@ -144,20 +151,20 @@
 }
 
 .admin-nav-card {
-  background: #ffffff;
+  background: var(--bg-card);
   padding: 1.5rem;
   border-radius: 1rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   text-decoration: none;
   text-align: center;
-  transition: all 0.2s ease;
-  color: #0f172a;
+  transition: all var(--transition-speed) ease;
+  color: var(--text-primary);
 }
 
 .admin-nav-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
-  border-color: #2563eb;
+  box-shadow: 0 8px 16px var(--shadow-color);
+  border-color: var(--accent-blue);
 }
 
 .admin-nav-icon {
@@ -169,10 +176,11 @@
 .admin-loading {
   text-align: center;
   padding: 3rem;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 1.1rem;
 }
 
+/* --- Responsive --- */
 @media (max-width: 768px) {
   .admin-title {
     font-size: 2rem;
