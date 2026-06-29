@@ -1,0 +1,90 @@
+.db-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition-speed) ease;
+  position: relative;
+  user-select: none;
+}
+
+.db-status:hover {
+  background: var(--bg-hover);
+}
+
+.db-status-dot {
+  font-size: 1rem;
+}
+
+.db-status-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.db-status-details {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  min-width: 250px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 10px 30px var(--shadow-color);
+  z-index: 1000;
+  font-size: 0.85rem;
+}
+
+.db-status-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.db-status-row:last-child {
+  border-bottom: none;
+}
+
+.db-status-row span:last-child {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.db-status-error {
+  color: var(--accent-red);
+}
+
+.db-status-error span:last-child {
+  color: var(--accent-red);
+}
+
+.db-status-refresh {
+  margin-top: 0.75rem;
+  width: 100%;
+  padding: 0.4rem;
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.db-status-refresh:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .db-status-details {
+    left: -50%;
+    min-width: 200px;
+  }
+}

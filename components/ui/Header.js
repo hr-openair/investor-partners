@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from '../../translations';
 import ThemeToggle from './ThemeToggle';
+import DbStatus from './DbStatus';
 import './Header.css';
 
 export default function Header() {
@@ -35,6 +36,7 @@ export default function Header() {
         </Link>
 
         <div className="header-right">
+           <DbStatus />  {/* ✅ NEU: Datenbank-Status */}
           <ThemeToggle />
 
           <button
