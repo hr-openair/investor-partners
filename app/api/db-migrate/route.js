@@ -1,21 +1,21 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
+});
+
 export async function POST() {
-  const dbUrl = process.env.DATABASE_URL;
-
-  if (!dbUrl) {
-    return NextResponse.json(
-      { success: false, error: 'DATABASE_URL nicht gesetzt' },
-      { status: 500 }
-    );
-  }
-
-  const pool = new Pool({ connectionString: dbUrl });
   const client = await pool.connect();
 
   try {
-    // 1. users
+    // 1. Benutzer-Tabelle
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -27,13 +27,16 @@ export async function POST() {
         kyc_status VARCHAR(50) DEFAULT 'pending',
         role VARCHAR(50) DEFAULT 'user',
         is_active BOOLEAN DEFAULT true,
+        is_verified BOOLEAN DEFAULT false,
+        blocked_at TIMESTAMP WITH TIME ZONE,
+        blocked_reason TEXT,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         last_login TIMESTAMP WITH TIME ZONE
       )
     `);
 
-    // 2. investments
+    // 2. Investments
     await client.query(`
       CREATE TABLE IF NOT EXISTS investments (
         id SERIAL PRIMARY KEY,
@@ -49,7 +52,7 @@ export async function POST() {
       )
     `);
 
-    // 3. user_investments
+    // 3. User Investments
     await client.query(`
       CREATE TABLE IF NOT EXISTS user_investments (
         id SERIAL PRIMARY KEY,
@@ -64,7 +67,7 @@ export async function POST() {
       )
     `);
 
-    // 4. transactions
+    // 4. Transactions
     await client.query(`
       CREATE TABLE IF NOT EXISTS transactions (
         id SERIAL PRIMARY KEY,
@@ -79,13 +82,15 @@ export async function POST() {
         status VARCHAR(20) NOT NULL DEFAULT 'pending',
         description TEXT,
         reference_id VARCHAR(255),
+        approved_by INTEGER REFERENCES users(id) ON DELETE SET NULL,
+        approved_at TIMESTAMP WITH TIME ZONE,
         completed_at TIMESTAMP WITH TIME ZONE,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       )
     `);
 
-    // 5. payment_methods
+    // 5. Payment Methods
     await client.query(`
       CREATE TABLE IF NOT EXISTS payment_methods (
         id SERIAL PRIMARY KEY,
@@ -101,7 +106,7 @@ export async function POST() {
       )
     `);
 
-    // 6. deposits_withdrawals
+    // 6. Deposits & Withdrawals
     await client.query(`
       CREATE TABLE IF NOT EXISTS deposits_withdrawals (
         id SERIAL PRIMARY KEY,
@@ -120,19 +125,59 @@ export async function POST() {
       )
     `);
 
+    // 7. Staff Admins
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS staff_admins (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        role VARCHAR(50) NOT NULL DEFAULT 'admin',
+        permissions JSONB DEFAULT '{"users": true, "transactions": true, "investments": true, "banking": true, "staff": false}',
+        can_create BOOLEAN DEFAULT true,
+        can_read BOOLEAN DEFAULT true,
+        can_update BOOLEAN DEFAULT true,
+        can_delete BOOLEAN DEFAULT false,
+        is_active BOOLEAN DEFAULT true,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(user_id)
+      )
+    `);
+
+    // 8. Audit Log
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS audit_log (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        action VARCHAR(100) NOT NULL,
+        table_name VARCHAR(100) NOT NULL,
+        record_id INTEGER,
+        old_data JSONB,
+        new_data JSONB,
+        ip_address INET,
+        user_agent TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     return NextResponse.json({
       success: true,
-      message: '✅ Migration erfolgreich! 6 Tabellen wurden erstellt.',
-      tables: ['users', 'investments', 'user_investments', 'transactions', 'payment_methods', 'deposits_withdrawals']
+      message: '✅ Migration erfolgreich! 8 Tabellen wurden erstellt.',
+      tables: ['users', 'investments', 'user_investments', 'transactions', 'payment_methods', 'deposits_withdrawals', 'staff_admins', 'audit_log'],
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('Migration Error:', error);
-    return NextResponse.json(
-      { success: false, error: error.message },
-      { status: 500 }
-    );
+    console.error('❌ Migrationsfehler:', error);
+    return NextResponse.json({
+      success: false,
+      message: '❌ Migration fehlgeschlagen',
+      error: {
+        message: error.message,
+        code: error.code,
+        detail: error.detail,
+      },
+      timestamp: new Date().toISOString(),
+    }, { status: 500 });
   } finally {
     client.release();
-    await pool.end();
   }
 }
