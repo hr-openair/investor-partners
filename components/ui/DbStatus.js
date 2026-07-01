@@ -22,7 +22,7 @@ export default function DbStatus() {
 
       if (data.success && data.hasDbUrl) {
         setStatus('online');
-        setMessage('✅ Datenbank verbunden');
+        setMessage('✅ DB connected');
         setDetails({
           tables: data.data?.tableCount || '?',
           version: data.data?.postgresVersion?.substring(0, 20) || '?',
@@ -34,7 +34,7 @@ export default function DbStatus() {
         setDetails(null);
       } else {
         setStatus('error');
-        setMessage('❌ Verbindung fehlgeschlagen');
+        setMessage('❌ DB error conn.');
         setDetails({ error: data.error || 'Unbekannter Fehler' });
       }
     } catch (error) {

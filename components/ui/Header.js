@@ -16,11 +16,12 @@ export default function Header() {
 
   const navLinks = [
     { href: `/${locale}`, label: t.nav.home },
-    { href: `/${locale}/services`, label: t.nav.services },
-    { href: `/${locale}/real-estate`, label: t.nav.realEstate },
-    { href: `/${locale}/partners`, label: t.nav.partners },
-    { href: `/${locale}/contact`, label: t.nav.contact },
-    { href: `/${locale}/login`, label: t.nav.login },
+    { href: `/${locale}/services`, label: 'Investment-Services' },
+    { href: `/${locale}/real-estate`, label: 'Immobilien' },
+    { href: `/${locale}/partners`, label: 'Globale Partner' },
+    { href: `/${locale}/contact`, label: 'Kontakt' },
+    { href: `/${locale}/login`, label: 'Investor Login' },
+    // ✅ Nur EIN Admin-Link (keine Unterpunkte)
     { href: `/${locale}/admin`, label: '🛡️ Admin' },
   ];
 
@@ -36,7 +37,7 @@ export default function Header() {
         </Link>
 
         <div className="header-right">
-           <DbStatus />  {/* ✅ NEU: Datenbank-Status */}
+          <DbStatus />
           <ThemeToggle />
 
           <button

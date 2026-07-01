@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
 
 export function proxy(request) {
   const { pathname } = request.nextUrl;
+  const cookieStore = request.cookies;
 
   // 1. Root-Pfad (/) auf /de umleiten
   if (pathname === '/') {
@@ -13,25 +15,42 @@ export function proxy(request) {
   const firstSegment = pathnameParts[0] || '';
   const locales = ['de', 'en'];
   const hasLocale = locales.includes(firstSegment);
+  const locale = hasLocale ? firstSegment : 'de';
 
-  // 3. Keine Sprache in der URL → auf /de umleiten (außer bei statischen Assets)
+  // 3. Keine Sprache in der URL → umleiten
   if (!hasLocale && pathname !== '/') {
-    // Prüfen, ob es sich um eine API-Route oder statische Datei handelt
     const isApi = pathname.startsWith('/api');
     const isStatic = pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|webp|ico)$/);
     const isNextStatic = pathname.startsWith('/_next');
 
-    // API und statische Dateien nicht umleiten
     if (!isApi && !isStatic && !isNextStatic) {
-      return NextResponse.redirect(new URL(`/de${pathname}`, request.url));
+      return NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
     }
   }
 
-  // 4. Admin-Bereich: Prüfen, ob Benutzer authentifiziert ist (optional)
-  // Hier könnte eine Session-Prüfung für /admin/* eingebaut werden
-  // if (pathname.includes('/admin') && !request.cookies.get('token')) {
-  //   return NextResponse.redirect(new URL(`/${firstSegment || 'de'}/login`, request.url));
-  // }
+  // 4. 🔐 ADMIN-BEREICH SCHÜTZEN
+  if (pathname.includes('/admin')) {
+    const token = cookieStore.get('token');
+
+    if (!token) {
+      const loginUrl = new URL(`/${locale}/login`, request.url);
+      loginUrl.searchParams.set('from', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    // Token validieren
+    try {
+      const decoded = jwt.verify(token.value, process.env.JWT_SECRET || 'fallback-secret');
+
+      // Prüfen, ob Benutzer Admin-Rolle hat
+      if (decoded.role !== 'admin' && decoded.role !== 'super_admin') {
+        return NextResponse.redirect(new URL(`/${locale}`, request.url));
+      }
+    } catch (error) {
+      const loginUrl = new URL(`/${locale}/login`, request.url);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
 
   return NextResponse.next();
 }
